@@ -4,7 +4,7 @@ services:
   - type: web
     name: yatharth-dream-devlopers
     runtime: node
-    plan: starter        # change to "free" to try it out; free services sleep after 15 minutes of no traffic
+    plan: free        # change to "free" to try it out; free services sleep after 15 minutes of no traffic
     region: singapore    # closest Render region to India
     buildCommand: npm ci && npm run build
     startCommand: npm start
