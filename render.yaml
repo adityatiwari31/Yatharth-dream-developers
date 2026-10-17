@@ -1,0 +1,31 @@
+# Render Blueprint. In the Render dashboard choose New → Blueprint, pick this repo,
+# and Render creates the web service from this file. Fill in the secrets when asked.
+services:
+  - type: web
+    name: yatharth-dream-devlopers
+    runtime: node
+    plan: starter        # change to "free" to try it out; free services sleep after 15 minutes of no traffic
+    region: singapore    # closest Render region to India
+    buildCommand: npm ci && npm run build
+    startCommand: npm start
+    healthCheckPath: /robots.txt
+    autoDeploy: true
+    envVars:
+      - key: NODE_VERSION
+        value: "22"
+      - key: NODE_ENV
+        value: production
+      - key: MONGODB_URI
+        sync: false
+      - key: CLOUDINARY_CLOUD_NAME
+        sync: false
+      - key: CLOUDINARY_API_KEY
+        sync: false
+      - key: CLOUDINARY_API_SECRET
+        sync: false
+      - key: NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME
+        sync: false
+      - key: ADMIN_SECRET
+        generateValue: true
+      - key: NEXT_PUBLIC_SITE_URL
+        sync: false
