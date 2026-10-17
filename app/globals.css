@@ -1,0 +1,204 @@
+@import "tailwindcss";
+
+/* ── Design tokens ──────────────────────────────────────────────────────── */
+@theme {
+  /* Surfaces: light peach, warm and quiet */
+  --color-paper: #f6e6da;      /* page background */
+  --color-cream: #fcf4ee;      /* tinted sections */
+  --color-card: #fffbf8;       /* cards */
+  --color-line: #e8d1c1;       /* hairlines, borders */
+  --color-line-strong: #d8b9a4;
+
+  /* Ink */
+  --color-ink: #2b1d16;        /* headings, body */
+  --color-muted: #7a6356;      /* secondary text */
+
+  /* Brass accent, carried over from the brand */
+  --color-brass: #96691f;      /* text-safe brass */
+  --color-brass-light: #d9a95c; /* buttons */
+  --color-brass-pale: #f4e3c6;
+
+  /* Deep green: footer and logo only (continuity with the old site) */
+  --color-pine: #17372b;
+  --color-pine-deep: #0f271e;
+  --color-on-pine: #f6efe8;
+
+  --color-whatsapp: #25d366;
+  --color-danger: #b4432f;
+  --color-ok: #2f7d4f;
+
+  --font-sans: var(--font-manrope), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-fraunces), Georgia, serif;
+  --font-hindi: var(--font-tiro), "Noto Sans Devanagari", sans-serif;
+
+  --shadow-warm: 0 12px 32px -12px rgba(43, 29, 22, 0.22), 0 2px 6px rgba(43, 29, 22, 0.06);
+  --shadow-soft: 0 1px 2px rgba(43, 29, 22, 0.05), 0 8px 24px -16px rgba(43, 29, 22, 0.18);
+
+  --radius-arch: 999px 999px 22px 22px;
+}
+
+/* ── Base ───────────────────────────────────────────────────────────────── */
+@layer base {
+  :root {
+    color-scheme: light;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 84px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+  }
+
+  body {
+    @apply bg-paper text-ink font-sans antialiased;
+    font-size: 15px;
+    line-height: 1.65;
+  }
+
+  h1, h2, h3, h4 {
+    @apply font-display text-ink;
+    font-weight: 500;
+    line-height: 1.12;
+    letter-spacing: -0.015em;
+    font-variation-settings: "opsz" 72, "SOFT" 40;
+  }
+
+  h1 { @apply text-[2.4rem] sm:text-[3.1rem] lg:text-[3.7rem]; }
+  h2 { @apply text-[1.75rem] sm:text-[2.1rem] lg:text-[2.4rem]; }
+  h3 { @apply text-[1.2rem] sm:text-[1.3rem]; font-variation-settings: "opsz" 24, "SOFT" 40; }
+
+  p { max-width: 64ch; }
+
+  a { color: inherit; }
+
+  :focus-visible {
+    outline: 3px solid var(--color-brass-light);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  ::selection { background: var(--color-brass-pale); }
+
+  img, video { max-width: 100%; height: auto; }
+}
+
+/* ── Reusable pieces ────────────────────────────────────────────────────── */
+@utility wrap {
+  width: 100%;
+  max-width: 1200px;
+  margin-inline: auto;
+  padding-inline: clamp(16px, 4vw, 32px);
+}
+
+@utility section-pad {
+  padding-block: clamp(48px, 7vw, 88px);
+}
+
+@utility arch {
+  border-radius: var(--radius-arch);
+  overflow: hidden;
+}
+
+@utility card {
+  @apply bg-card border border-line rounded-2xl;
+  box-shadow: var(--shadow-soft);
+}
+
+@utility lead {
+  @apply text-[1.05rem] sm:text-[1.15rem] text-muted;
+  line-height: 1.6;
+}
+
+@utility kicker {
+  @apply text-brass font-medium text-sm;
+}
+
+@utility btn {
+  @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-[0.95rem] font-semibold no-underline transition;
+  min-height: 46px;
+}
+
+@utility btn-primary {
+  @apply bg-brass-light text-ink;
+  box-shadow: 0 8px 20px -10px rgba(150, 105, 31, 0.55);
+}
+.btn-primary:hover { filter: brightness(1.05); }
+
+@utility btn-outline {
+  @apply border border-ink/70 text-ink bg-transparent;
+}
+.btn-outline:hover { @apply bg-ink text-cream; }
+
+@utility btn-wa {
+  @apply bg-whatsapp text-[#06301a];
+  box-shadow: 0 8px 20px -10px rgba(37, 211, 102, 0.6);
+}
+.btn-wa:hover { filter: brightness(1.04); }
+
+@utility btn-ghost-light {
+  @apply border border-on-pine/60 text-on-pine bg-transparent;
+}
+.btn-ghost-light:hover { @apply bg-on-pine/10; }
+
+@utility input {
+  @apply w-full rounded-xl border border-line bg-white px-4 py-3 text-[0.95rem] text-ink placeholder:text-muted/70;
+}
+.input:focus { @apply border-brass outline-none; box-shadow: 0 0 0 3px var(--color-brass-pale); }
+
+@utility label {
+  @apply block text-sm font-medium text-ink mb-1.5;
+}
+
+@utility fact {
+  @apply rounded-xl bg-cream px-4 py-3;
+}
+
+@utility prose-ydd {
+  & p { @apply mb-4 text-ink/90; }
+  & p:last-child { @apply mb-0; }
+}
+
+/* jaali (lattice) band, drawn in CSS so it needs no image */
+.jaali {
+  height: 14px;
+  background-color: transparent;
+  background-image: radial-gradient(circle at 50% 100%, var(--color-brass-light) 0 3px, transparent 3.5px);
+  background-size: 28px 14px;
+  opacity: 0.55;
+}
+
+/* hero entrance: the one page-load moment */
+@keyframes rise {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: none; }
+}
+.rise { animation: rise 0.7s cubic-bezier(.2,.7,.2,1) both; }
+.rise-2 { animation-delay: 0.1s; }
+.rise-3 { animation-delay: 0.2s; }
+.rise-4 { animation-delay: 0.3s; }
+
+/* horizontal scroller without a visible scrollbar */
+.scroller { scrollbar-width: none; }
+.scroller::-webkit-scrollbar { display: none; }
+
+/* star rating input */
+.stars input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+.stars label { cursor: pointer; color: var(--color-line-strong); font-size: 1.9rem; line-height: 1; padding: 2px; }
+.stars { display: inline-flex; flex-direction: row-reverse; }
+.stars input:checked ~ label,
+.stars label:hover,
+.stars label:hover ~ label { color: var(--color-brass-light); }
+.stars input:focus-visible + label { outline: 3px solid var(--color-brass-light); border-radius: 6px; }
+
+/* details/summary FAQ */
+.faq details { @apply border-b border-line py-3; }
+.faq summary { @apply cursor-pointer font-semibold list-none flex justify-between gap-3; }
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::after { content: "+"; color: var(--color-brass); font-size: 1.3rem; line-height: 1; }
+.faq details[open] summary::after { content: "–"; }
+.faq details p { @apply mt-2 text-muted; }
