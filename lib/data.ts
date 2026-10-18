@@ -1,6 +1,10 @@
 import { connectDB, hasDatabase } from "@/lib/mongodb";
 import { Villa, toVillaJSON, type VillaJSON, type VillaStatus } from "@/lib/models/Villa";
 import { Review, toReviewJSON, type ReviewJSON } from "@/lib/models/Review";
+import { Notice, toNoticeJSON } from "@/lib/models/Notice";
+import { Settings, toFounderJSON } from "@/lib/models/Settings";
+import { FOUNDERS } from "@/lib/config";
+import type { FounderJSON, NoticeJSON } from "@/lib/villaTypes";
 
 // Read helpers for pages. They never throw: when the database is not configured
 // or unreachable, pages render their empty states instead of crashing.
@@ -57,4 +61,28 @@ export function getReviewStats() {
     },
     { count: 0, avg: 0 },
   );
+}
+
+/** Lines for the floating "Upcoming" bar on the home page (active ones only). */
+export function getActiveNotices() {
+  return safe(async () => {
+    const docs = await Notice.find({ active: true }).sort({ order: 1, createdAt: -1 }).lean();
+    return docs.map(toNoticeJSON);
+  }, [] as NoticeJSON[]);
+}
+
+/** The founders from lib/config.ts, in the shape the About page uses. Shown until the owner saves founders in /admin. */
+export const DEFAULT_FOUNDERS: FounderJSON[] = FOUNDERS.map((f) => ({
+  name: f.name,
+  role: f.role,
+  bio: f.bio,
+  photo: { url: f.photo, publicId: "" },
+}));
+
+export function getFounders() {
+  return safe(async () => {
+    const doc = await Settings.findOne({ key: "site" }).lean();
+    const list = (doc?.founders ?? []).map(toFounderJSON).filter((f) => f.name);
+    return list.length ? list : DEFAULT_FOUNDERS;
+  }, DEFAULT_FOUNDERS);
 }

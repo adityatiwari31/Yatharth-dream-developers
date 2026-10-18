@@ -4,11 +4,15 @@ import { useEffect, useState } from "react";
 import ManageVillas from "./ManageVillas";
 import ManageReviews from "./ManageReviews";
 import ManageEnquiries from "./ManageEnquiries";
+import ManageNotices from "./ManageNotices";
+import ManageFounders from "./ManageFounders";
 
 const TABS = [
   { id: "villas", label: "Villas" },
+  { id: "notices", label: "Upcoming bar" },
   { id: "reviews", label: "Reviews" },
   { id: "enquiries", label: "Enquiries" },
+  { id: "founders", label: "Founders" },
 ] as const;
 type Tab = (typeof TABS)[number]["id"];
 
@@ -42,7 +46,7 @@ export default function AdminPage() {
       if (res.status === 401) {
         setError("That key was not accepted. Check for a stray space and try again.");
       } else if (!res.ok) {
-        setError(`The server replied ${res.status}. Check the Render logs and that MONGODB_URI is set.`);
+        setError(`The server replied ${res.status}. Check the Vercel logs and that MONGODB_URI is set.`);
       } else {
         window.sessionStorage.setItem("ydd-admin-key", key);
         setAdminKey(key);
@@ -66,7 +70,7 @@ export default function AdminPage() {
       <div className="wrap section-pad">
         <form onSubmit={unlock} className="card mx-auto max-w-md p-6">
           <h1 className="!text-[1.6rem]">Admin</h1>
-          <p className="mt-2 text-[0.92rem] text-muted">Enter the admin key (the ADMIN_SECRET value set on Render).</p>
+          <p className="mt-2 text-[0.92rem] text-muted">Enter the admin key (the ADMIN_SECRET value set in Vercel).</p>
           <label htmlFor="admin-key" className="label mt-5">
             Admin key
           </label>
@@ -111,6 +115,8 @@ export default function AdminPage() {
         {tab === "villas" && <ManageVillas adminKey={adminKey} />}
         {tab === "reviews" && <ManageReviews adminKey={adminKey} />}
         {tab === "enquiries" && <ManageEnquiries adminKey={adminKey} />}
+        {tab === "notices" && <ManageNotices adminKey={adminKey} />}
+        {tab === "founders" && <ManageFounders adminKey={adminKey} />}
       </div>
     </div>
   );

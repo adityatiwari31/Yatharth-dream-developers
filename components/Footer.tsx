@@ -10,6 +10,7 @@ const LINKS = [
   { href: "/size-guide", label: "Size guide" },
   { href: "/location", label: "Location" },
   { href: "/about", label: "About" },
+  { href: "/about#vastu", label: "Vastu" },
   { href: "/reviews", label: "Reviews" },
   { href: "/contact", label: "Contact" },
   { href: "/saved", label: "Saved villas" },

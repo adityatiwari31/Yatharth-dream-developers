@@ -7,7 +7,7 @@ import SaveButton from "@/components/SaveButton";
 import PaymentPlan from "@/components/PaymentPlan";
 import VillaCard, { villaSubline } from "@/components/VillaCard";
 import EnquiryForm from "@/app/contact/EnquiryForm";
-import { CheckIcon, ExternalIcon, PinIcon, WhatsAppIcon } from "@/components/Icons";
+import { CheckIcon, CompassIcon, ExternalIcon, PinIcon, WhatsAppIcon } from "@/components/Icons";
 import { getVillaBySlug, getVillas } from "@/lib/data";
 import { BRAND_NAME, SITE_URL, waLink } from "@/lib/config";
 import { plotFacts } from "@/lib/units";
@@ -64,6 +64,12 @@ export default async function VillaPage({ params }: Props) {
           <StatusBadge status={villa.status} />
           <h1 className="mt-3 !text-[1.9rem] sm:!text-[2.3rem]">{villa.name}</h1>
           {villa.tagline && <p className="mt-2 font-display text-[1.15rem] text-brass">{villa.tagline}</p>}
+          <Link
+            href="/about#vastu"
+            className="mt-3 inline-flex items-center gap-1.5 rounded-full border border-brass/40 bg-brass-pale/60 px-3 py-1 text-[0.82rem] font-medium text-brass no-underline transition hover:border-brass"
+          >
+            <CompassIcon className="h-3.5 w-3.5" /> Vastu friendly, adjusted to your family
+          </Link>
 
           <dl className="mt-6 grid grid-cols-2 gap-3">
             {facts.sizeText && <Fact label="Plot size" value={facts.sizeText} />}
