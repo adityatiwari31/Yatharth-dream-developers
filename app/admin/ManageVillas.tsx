@@ -35,7 +35,6 @@ export default function ManageVillas({ adminKey }: { adminKey: string }) {
   const [editing, setEditing] = useState<{ id: string | null; form: Form } | null>(null);
   const [saving, setSaving] = useState(false);
   const [slugTouched, setSlugTouched] = useState(false);
-  const [importing, setImporting] = useState(false);
   const headers = { "Content-Type": "application/json", "x-admin-secret": adminKey };
 
   async function load() {
@@ -112,27 +111,7 @@ export default function ManageVillas({ adminKey }: { adminKey: string }) {
     if (res.ok) load();
   }
 
-  async function importStarter() {
-    if (!window.confirm("Import the 7 listings from the old website? Pictures are uploaded to Cloudinary. Existing villas are not changed.")) return;
-    setImporting(true);
-    setStatus("Importing… this uploads about 25 pictures and 2 videos, so it can take a minute.");
-    try {
-      const res = await fetch("/api/seed", { method: "POST", headers });
-      const json = await res.json().catch(() => ({}));
-      if (!res.ok) setStatus(json.error || `Import failed (server replied ${res.status}).`);
-      else
-        setStatus(
-          `Imported ${json.created?.length ?? 0} villa(s)` +
-            (json.skipped?.length ? `, skipped ${json.skipped.length} already present` : "") +
-            (json.problems?.length ? `. Problems: ${json.problems.join("; ")}` : "."),
-        );
-      await load();
-    } catch {
-      setStatus("Network error during import.");
-    } finally {
-      setImporting(false);
-    }
-  }
+ 
 
   return (
     <section aria-label="Manage villas">
@@ -140,9 +119,7 @@ export default function ManageVillas({ adminKey }: { adminKey: string }) {
         <button type="button" onClick={startNew} className="btn btn-primary !min-h-10 !px-4 !py-2 text-sm">
           Add a villa
         </button>
-        <button type="button" onClick={importStarter} disabled={importing} className="btn btn-outline !min-h-10 !px-4 !py-2 text-sm">
-          {importing ? "Importing…" : "Import starter villas from the old site"}
-        </button>
+     
         <span className="text-[0.88rem] text-muted" aria-live="polite">
           {status}
         </span>
@@ -312,8 +289,7 @@ export default function ManageVillas({ adminKey }: { adminKey: string }) {
             </div>
           </li>
         ))}
-        {villas.length === 0 && <li className="text-muted">No villas yet. Add one, or import the starter villas.</li>}
-      </ul>
+{villas.length === 0 && <li className="text-muted">No villas yet. Click "Add a villa" to create your first listing.</li>}      </ul>
     </section>
   );
 }
