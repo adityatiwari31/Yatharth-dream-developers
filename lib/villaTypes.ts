@@ -64,3 +64,22 @@ export type EnquiryJSON = {
   handled: boolean;
   createdAt: string;
 };
+
+/** An item in the floating "Upcoming" bar on the home page. */
+export type NoticeJSON = {
+  _id: string;
+  title: string;
+  text: string;
+  link: string; // "/villas/slug", another page, or a full https:// address; empty for no link
+  active: boolean;
+  order: number;
+  createdAt: string;
+};
+
+/** A founder shown on the About page (managed in /admin → Founders). */
+export type FounderJSON = {
+  name: string;
+  role: string;
+  bio: string;
+  photo: { url: string; publicId: string };
+};

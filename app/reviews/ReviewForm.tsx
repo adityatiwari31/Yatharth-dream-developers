@@ -1,10 +1,11 @@
 "use client";
 
 import { useRef, useState } from "react";
+import { compressImage } from "@/lib/compressImage";
 
 const MIN_WORDS = 5;
 const MAX_WORDS = 80;
-const MAX_PHOTO_MB = 5;
+const MAX_PHOTO_MB = 15; // shrunk in the browser before sending
 
 function wordCount(s: string) {
   return s.trim() ? s.trim().split(/\s+/).length : 0;
@@ -45,7 +46,10 @@ export default function ReviewForm() {
     setStatus("sending");
     setError("");
     try {
-      const res = await fetch("/api/reviews", { method: "POST", body: new FormData(form) });
+      const fd = new FormData(form);
+      const photo = fd.get("photo");
+      if (photo instanceof File && photo.size > 0) fd.set("photo", await compressImage(photo));
+      const res = await fetch("/api/reviews", { method: "POST", body: fd });
       const json = await res.json().catch(() => ({}));
       if (!res.ok) {
         setError(json.error ?? "Something went wrong. Please try again.");

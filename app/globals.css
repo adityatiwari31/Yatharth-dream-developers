@@ -19,8 +19,8 @@
   --color-brass-pale: #f4e3c6;
 
   /* Deep green: footer and logo only (continuity with the old site) */
-  --color-pine: #17372b;
-  --color-pine-deep: #0f271e;
+  --color-pine: #214d3c;
+  --color-pine-deep: #1a3f31;
   --color-on-pine: #f6efe8;
 
   --color-whatsapp: #25d366;
@@ -58,6 +58,9 @@
     @apply bg-paper text-ink font-sans antialiased;
     font-size: 15px;
     line-height: 1.65;
+    /* room for the floating "Upcoming" bar on the home page (set by UpcomingBar) */
+    padding-bottom: var(--notice-h, 0px);
+    transition: padding-bottom 0.3s ease;
   }
 
   h1, h2, h3, h4 {

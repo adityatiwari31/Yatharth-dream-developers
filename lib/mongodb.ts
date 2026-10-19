@@ -19,7 +19,7 @@ global._mongooseCache = cached;
 export async function connectDB() {
   if (cached.conn) return cached.conn;
   if (!MONGODB_URI) {
-    throw new Error("MONGODB_URI is not set. Add it to .env.local (locally) or to Render → Environment.");
+    throw new Error("MONGODB_URI is not set. Add it to .env.local (locally) or in Vercel → Settings → Environment Variables.");
   }
   if (!cached.promise) {
     cached.promise = mongoose

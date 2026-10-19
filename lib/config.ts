@@ -17,10 +17,12 @@ export const INSTAGRAM_HANDLE = "@yd_developers";
 export const INSTAGRAM_URL = "https://www.instagram.com/yd_developers";
 export const LINKEDIN_URL = "https://www.linkedin.com/in/yash-gupta-69674324b/";
 
-// Live address, no trailing slash. Set NEXT_PUBLIC_SITE_URL on Render to override.
+// Live address, no trailing slash. Set NEXT_PUBLIC_SITE_URL in Vercel → Settings → Environment Variables.
+// (On the server Vercel also tells us the production address, so links work before it is set.)
 export const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") ||
-  "https://yatharthdreamdevlopers.onrender.com";
+  (process.env.VERCEL_PROJECT_PRODUCTION_URL ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}` : "") ||
+  "http://localhost:3000";
 
 // Company registration (shown on About, Contact and the trust strip)
 export const COMPANY = {
@@ -35,22 +37,22 @@ export const COMPANY = {
   aoa: "e-AOA, Form INC-34, filed 22 April 2025 and approved 23 April 2025",
 };
 
-// The two founders (the directors on the MCA record).
-// EDIT the `bio` lines with a sentence or two about each person in your own words,
-// and add a Cloudinary photo URL to `photo`. Until a photo is added, the page
-// shows the person's initials inside an arch.
+// The two founders, as shown until they are edited in /admin → Founders.
+// Names, roles, introductions and photos are all managed from the admin page;
+// these values are only the starting point (used when nothing has been saved yet).
+// Until a photo is added, the page shows the person's initials inside an arch.
 export const FOUNDERS = [
   {
-    name: "Sushil Kumar Gupta",
-    role: "Co-founder and Director",
+    name: "Yash Gupta",
+    role: "Co-founder",
     photo: "",
-    bio: "Director of Yatharth Dream Devlopers Private Limited since its incorporation in April 2025. Together the founders buy plots in and around Vatika, plan them, and build villas on them: one team from the first drawing to the finished home.",
+    bio: "Co-founder of Yatharth Dream Devlopers, Jaipur. Together the founders buy plots in and around Vatika, plan them, and build villas on them: one team from the first drawing to the finished home.",
   },
   {
     name: "Tanay Gupta",
-    role: "Co-founder and Director",
+    role: "Co-founder",
     photo: "",
-    bio: "Director of Yatharth Dream Devlopers Private Limited since its incorporation in April 2025. Every villa is planned for the size and shape of its plot, with the Vastu adjustments families generally ask for.",
+    bio: "Co-founder of Yatharth Dream Devlopers, Jaipur. Every villa is planned for the size and shape of its plot, with the Vastu adjustments families generally ask for.",
   },
 ];
 

@@ -4,8 +4,10 @@ import VillaCard from "@/components/VillaCard";
 import ReviewCard from "@/components/ReviewCard";
 import PaymentPlan from "@/components/PaymentPlan";
 import SectionHeading from "@/components/SectionHeading";
+import VastuSection from "@/components/VastuSection";
+import UpcomingBar from "@/components/UpcomingBar";
 import { WhatsAppIcon, CheckIcon, InstagramIcon } from "@/components/Icons";
-import { getHomeVillas, getApprovedReviews, getReviewStats } from "@/lib/data";
+import { getHomeVillas, getApprovedReviews, getReviewStats, getActiveNotices } from "@/lib/data";
 import {
   BRAND_SLOGAN,
   BRAND_TAGLINE,
@@ -30,10 +32,11 @@ const STEPS = [
 ];
 
 export default async function HomePage() {
-  const [villas, reviews, stats] = await Promise.all([
+  const [villas, reviews, stats, notices] = await Promise.all([
     getHomeVillas(HOME_VILLA_COUNT),
     getApprovedReviews(HOME_REVIEW_COUNT),
     getReviewStats(),
+    getActiveNotices(),
   ]);
 
   return (
@@ -136,6 +139,9 @@ export default async function HomePage() {
       {/* ── Payment plan ─────────────────────────────────────────────────── */}
       <PaymentPlan />
 
+      {/* ── Vastu ────────────────────────────────────────────────────────── */}
+      <VastuSection />
+
       {/* ── How to buy (compact) ─────────────────────────────────────────── */}
       <section className="wrap section-pad" aria-labelledby="steps-heading">
         <SectionHeading
@@ -234,6 +240,9 @@ export default async function HomePage() {
           </div>
         </div>
       </section>
+
+      {/* ── Upcoming projects bar (floats at the bottom, closable; managed in /admin) ── */}
+      <UpcomingBar items={notices} />
     </>
   );
 }

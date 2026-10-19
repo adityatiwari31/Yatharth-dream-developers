@@ -7,7 +7,7 @@ import { clientIp, num, rateLimited, str } from "@/lib/validate";
 
 export const dynamic = "force-dynamic";
 
-const MAX_PHOTO_BYTES = 5 * 1024 * 1024;
+const MAX_PHOTO_BYTES = 4 * 1024 * 1024; // photos are shrunk in the browser first; Vercel accepts requests up to 4.5 MB
 const MIN_WORDS = 5;
 const MAX_WORDS = 80;
 
@@ -50,7 +50,7 @@ export async function POST(req: Request) {
     const file = form.get("photo");
     if (file instanceof File && file.size > 0) {
       if (!file.type.startsWith("image/")) return Response.json({ error: "The attachment must be a photo." }, { status: 400 });
-      if (file.size > MAX_PHOTO_BYTES) return Response.json({ error: "The photo must be smaller than 5 MB." }, { status: 400 });
+      if (file.size > MAX_PHOTO_BYTES) return Response.json({ error: "The photo must be smaller than 4 MB." }, { status: 400 });
       if (!hasCloudinary) return Response.json({ error: "Photo uploads are not set up yet. Please send the review without a photo." }, { status: 500 });
       const buf = Buffer.from(await file.arrayBuffer());
       const up = await uploadBuffer(buf, { folder: "ydd/reviews", resourceType: "image" });

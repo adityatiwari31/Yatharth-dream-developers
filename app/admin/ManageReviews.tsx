@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Stars from "@/components/Stars";
+import { compressImage } from "@/lib/compressImage";
 import type { ReviewJSON } from "@/lib/villaTypes";
 
 export default function ManageReviews({ adminKey }: { adminKey: string }) {
@@ -37,6 +38,8 @@ export default function ManageReviews({ adminKey }: { adminKey: string }) {
     setSaving(true);
     const fd = new FormData(form);
     fd.set("approved", "true");
+    const photo = fd.get("photo");
+    if (photo instanceof File && photo.size > 0) fd.set("photo", await compressImage(photo));
     const res = await fetch("/api/reviews", { method: "POST", headers, body: fd });
     const json = await res.json().catch(() => ({}));
     setSaving(false);
