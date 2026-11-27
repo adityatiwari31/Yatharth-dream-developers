@@ -6,7 +6,7 @@ import { PAYMENT_PLAN, WA_GENERAL, WHATSAPP_DISPLAY, INSTAGRAM_HANDLE, COMPANY }
 
 export const metadata: Metadata = {
   title: "How to buy: steps, payment plan and FAQ",
-  description: "Four steps from plot to villa, the 20% down payment and 80% bank loan plan, and answers to the questions buyers ask.",
+  description: "Four steps from plot to villa, a 20–30% down payment and 70–80% bank loan plan, and answers to the questions buyers ask.",
 };
 
 const STEPS = [
@@ -22,7 +22,7 @@ const STEPS = [
   },
   {
     title: "Plan the payment",
-    text: `You pay ${PAYMENT_PLAN.downPaymentPercent}% as a down payment. The remaining ${PAYMENT_PLAN.loanPercent}% comes as a home loan from a bank, which we help you arrange.`,
+    text: `You pay 20–30% as a down payment. The remaining 70–80% may be financed through a bank loan, subject to bank approval and eligibility.`,
     link: { href: "#payment", label: "See the payment plan" },
   },
   {
@@ -34,8 +34,8 @@ const STEPS = [
 
 const FAQ = [
   {
-    q: "How does the 80 / 20 payment plan work?",
-    a: `You pay ${PAYMENT_PLAN.downPaymentPercent}% of the villa price as a down payment. For the remaining ${PAYMENT_PLAN.loanPercent}% we introduce you to a bank and help with the paperwork for a home loan. ${PAYMENT_PLAN.note}`,
+    q: "How does the down payment and bank loan work?",
+    a: `The indicative payment range is 20–30% as a down payment and 70–80% through a bank loan. We can introduce you to a bank and help with paperwork. ${PAYMENT_PLAN.note}`,
   },
   { q: "Where are your projects?", a: "Our upcoming project is a planned society of 15 villas at Village Vatika, Tehsil Sanganer, Jaipur. Our villa under construction is at Khedi Gokulpura, near the Ring Road, Vatika." },
   { q: "Is Yatharth Dream Devlopers a registered company?", a: `Yes. We are incorporated as Yatharth Dream Devlopers Private Limited under the Companies Act, 2013, with CIN ${COMPANY.cin}. You can check this on mca.gov.in, and the certificate is on our About page.` },
@@ -78,7 +78,7 @@ export default function HowToBuyPage() {
         <div className="wrap section-pad grid gap-10 lg:grid-cols-[1fr_1.2fr]">
           <div>
             <h2 id="pay-heading" className="text-on-pine">
-              {PAYMENT_PLAN.downPaymentPercent}% down. {PAYMENT_PLAN.loanPercent}% bank loan, arranged by us.
+              20–30% down payment. 70–80% bank loan, subject to approval.
             </h2>
             <p className="mt-4 text-on-pine/85">
               You bring the down payment. We introduce you to the bank, help with the documents and the loan covers the rest of the price. Your EMI
