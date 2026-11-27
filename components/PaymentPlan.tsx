@@ -40,11 +40,11 @@ export default function PaymentPlan({ compact = false }: { compact?: boolean }) 
         </div>
         <div className="grid grid-cols-2 gap-4">
           <div className="rounded-2xl border border-brass-light/40 bg-pine-deep/60 p-5">
-            <div className="font-display text-[2.6rem] leading-none text-brass-light">{downPaymentPercent}%</div>
+            <div className="font-display text-[2.6rem] leading-none text-brass-light">{downPaymentMin}–{downPaymentMax}%</div>
             <div className="mt-2 text-[0.92rem] text-on-pine/85">Down payment, paid by you</div>
           </div>
           <div className="rounded-2xl border border-brass-light/40 bg-pine-deep/60 p-5">
-            <div className="font-display text-[2.6rem] leading-none text-brass-light">{loanPercent}%</div>
+            <div className="font-display text-[2.6rem] leading-none text-brass-light">{loanMin}–{loanMax}%</div>
             <div className="mt-2 text-[0.92rem] text-on-pine/85">Home loan from a bank, arranged with our help</div>
           </div>
         </div>
