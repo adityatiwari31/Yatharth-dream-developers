@@ -6,15 +6,15 @@ import { PAYMENT_PLAN } from "@/lib/config";
  * the default is the full-width band on the home page.
  */
 export default function PaymentPlan({ compact = false }: { compact?: boolean }) {
-  const { downPaymentPercent, loanPercent, note } = PAYMENT_PLAN;
+  const { downPaymentMin, downPaymentMax, loanMin, loanMax, note } = PAYMENT_PLAN;
 
   if (compact) {
     return (
       <aside className="rounded-2xl border border-brass/30 bg-brass-pale/60 p-5">
         <h3 className="!text-[1.05rem]">How you pay</h3>
         <div className="mt-3 flex gap-4">
-          <Split big={`${downPaymentPercent}%`} small="down payment, paid by you" />
-          <Split big={`${loanPercent}%`} small="home loan from a bank, arranged with our help" />
+          <Split big={`${downPaymentMin}–${downPaymentMax}%`} small="down payment, paid by you" />
+          <Split big={`${loanMin}–${loanMax}%`} small="home loan from a bank, arranged with our help" />
         </div>
         <p className="mt-3 text-[0.85rem] text-muted">{note}</p>
         <Link href="/how-to-buy" className="mt-2 inline-block text-[0.9rem] font-medium text-brass">
@@ -29,10 +29,10 @@ export default function PaymentPlan({ compact = false }: { compact?: boolean }) 
       <div className="wrap grid items-center gap-8 py-12 sm:py-14 lg:grid-cols-[1.1fr_1fr]">
         <div>
           <h2 id="pay-heading" className="text-on-pine">
-            Pay {downPaymentPercent}% now. We arrange the other {loanPercent}% as a bank loan.
+            Pay {downPaymentMin}–{downPaymentMax}% upfront. The remaining {loanMin}–{loanMax}% may be financed through a bank loan.
           </h2>
           <p className="mt-4 max-w-xl text-on-pine/85">
-            You bring the down payment. We introduce you to the bank, help with the paperwork and the loan covers the rest. {note}
+            You pay the agreed down payment. We can introduce you to a bank and help with paperwork. The final loan amount depends on bank approval and eligibility. {note}
           </p>
           <Link href="/how-to-buy" className="btn btn-primary mt-6">
             See how buying works
