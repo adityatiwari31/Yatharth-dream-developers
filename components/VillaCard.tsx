@@ -47,6 +47,13 @@ export default function VillaCard({ villa, priority = false }: { villa: VillaJSO
         </h3>
         {sub && <p className="mt-1.5 text-[0.92rem] text-muted">{sub}</p>}
         {villa.tagline && <p className="mt-2 line-clamp-2 text-[0.95rem] text-ink/85">{villa.tagline}</p>}
+        {(villa.actualPrice > 0 || villa.discountedPrice > 0) && (
+          <div className="mt-3 flex flex-wrap items-baseline gap-2">
+            {villa.discountedPrice > 0 && <span className="font-semibold text-brass">₹{villa.discountedPrice.toLocaleString("en-IN")}</span>}
+            {villa.actualPrice > 0 && villa.actualPrice > villa.discountedPrice && <span className="text-sm text-muted line-through">₹{villa.actualPrice.toLocaleString("en-IN")}</span>}
+          </div>
+        )}
+        {villa.offers?.length > 0 && <p className="mt-2 text-sm font-medium text-brass">Offers available</p>}
         <div className="mt-auto flex flex-wrap gap-x-4 gap-y-1 pt-4 text-[0.88rem] text-muted">
           {villa.floors && <span>{villa.floors}</span>}
           {villa.bedrooms > 0 && <span>{villa.bedrooms} bedroom{villa.bedrooms === 1 ? "" : "s"}</span>}

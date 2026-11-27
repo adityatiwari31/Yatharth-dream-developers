@@ -9,13 +9,13 @@ type Room = { label: string; size: string };
 type Form = {
   name: string; slug: string; status: VillaStatus; featured: boolean; order: number;
   tagline: string; description: string; facing: string; plotLength: string; plotWidth: string; plotGaj: string;
-  floors: string; bedrooms: string; highlights: string; rooms: Room[]; location: string; mapUrl: string;
+  floors: string; bedrooms: string; actualPrice: string; discountedPrice: string; offers: string; highlights: string; rooms: Room[]; location: string; mapUrl: string;
   videoUrl: string; pdfUrl: string; images: AdminImage[];
 };
 
 const EMPTY: Form = {
   name: "", slug: "", status: "design", featured: false, order: 0, tagline: "", description: "", facing: "",
-  plotLength: "", plotWidth: "", plotGaj: "", floors: "", bedrooms: "", highlights: "", rooms: [], location: "", mapUrl: "",
+  plotLength: "", plotWidth: "", plotGaj: "", floors: "", bedrooms: "", actualPrice: "", discountedPrice: "", offers: "", highlights: "", rooms: [], location: "", mapUrl: "",
   videoUrl: "", pdfUrl: "", images: [],
 };
 
@@ -24,6 +24,7 @@ function toForm(v: VillaJSON): Form {
     name: v.name, slug: v.slug, status: v.status, featured: v.featured, order: v.order ?? 0, tagline: v.tagline, description: v.description,
     facing: v.facing, plotLength: v.plotLength ? String(v.plotLength) : "", plotWidth: v.plotWidth ? String(v.plotWidth) : "",
     plotGaj: v.plotGaj ? String(v.plotGaj) : "", floors: v.floors, bedrooms: v.bedrooms ? String(v.bedrooms) : "",
+    actualPrice: v.actualPrice ? String(v.actualPrice) : "", discountedPrice: v.discountedPrice ? String(v.discountedPrice) : "", offers: (v.offers ?? []).join("\n"),
     highlights: v.highlights.join("\n"), rooms: v.rooms.map((r) => ({ label: r.label, size: r.size })), location: v.location, mapUrl: v.mapUrl,
     videoUrl: v.videoUrl, pdfUrl: v.pdfUrl, images: v.images.map((i) => ({ url: i.url, publicId: i.publicId, alt: i.alt })),
   };
@@ -80,6 +81,9 @@ export default function ManageVillas({ adminKey }: { adminKey: string }) {
       plotWidth: Number(f.plotWidth) || 0,
       plotGaj: Number(f.plotGaj) || 0,
       bedrooms: Number(f.bedrooms) || 0,
+      actualPrice: Number(f.actualPrice) || 0,
+      discountedPrice: Number(f.discountedPrice) || 0,
+      offers: f.offers.split(/\r?\n/).map((s) => s.trim()).filter(Boolean),
       highlights: f.highlights.split(/\r?\n/).map((s) => s.trim()).filter(Boolean),
       rooms: f.rooms.filter((r) => r.label.trim() && r.size.trim()),
     };
@@ -205,6 +209,18 @@ export default function ManageVillas({ adminKey }: { adminKey: string }) {
               <input className="input" type="number" min={0} value={editing.form.bedrooms} onChange={(e) => set("bedrooms", e.target.value)} />
             </Field>
           </div>
+
+          <div className="grid gap-4 sm:grid-cols-2">
+            <Field label="Actual price (₹)" hint="Enter the original price in rupees">
+              <input className="input" type="number" min={0} step={1} value={editing.form.actualPrice} onChange={(e) => set("actualPrice", e.target.value)} />
+            </Field>
+            <Field label="Discounted price (₹)" hint="Enter the current offer price in rupees">
+              <input className="input" type="number" min={0} step={1} value={editing.form.discountedPrice} onChange={(e) => set("discountedPrice", e.target.value)} />
+            </Field>
+          </div>
+          <Field label="Offer gifts" hint="One gift per line, e.g. LED TV, Refrigerator, Washing Machine">
+            <textarea className="input resize-y" rows={3} value={editing.form.offers} onChange={(e) => set("offers", e.target.value)} />
+          </Field>
 
           <Field label="Highlights" hint="One per line">
             <textarea className="input resize-y" rows={4} value={editing.form.highlights} onChange={(e) => set("highlights", e.target.value)} />

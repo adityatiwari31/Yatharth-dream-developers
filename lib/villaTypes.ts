@@ -28,6 +28,9 @@ export type VillaJSON = {
   plotGaj: number;
   floors: string;
   bedrooms: number;
+  actualPrice: number;
+  discountedPrice: number;
+  offers: string[];
   highlights: string[];
   rooms: VillaRoom[];
   location: string;

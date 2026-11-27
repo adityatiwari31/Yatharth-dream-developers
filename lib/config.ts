@@ -58,8 +58,10 @@ export const FOUNDERS = [
 
 // Payment plan shown on the home page, every villa page and How to buy.
 export const PAYMENT_PLAN = {
-  downPaymentPercent: 20,
-  loanPercent: 80,
+  downPaymentMin: 20,
+  downPaymentMax: 30,
+  loanMin: 70,
+  loanMax: 80,
   note: "Loan approval, interest rate and eligibility are decided by the bank. We help with the paperwork and introduce you to the bank.",
 };
 
