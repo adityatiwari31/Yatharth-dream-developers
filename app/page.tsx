@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import VillaCard from "@/components/VillaCard";
@@ -22,12 +23,18 @@ import {
   WA_GENERAL,
 } from "@/lib/config";
 
+export const metadata: Metadata = {
+  title: "Villas for sale in Jaipur Vatika",
+  description: "Explore villa designs, plot sizes, floor plans and current offers by Yatharth Dream Devlopers in Vatika, Jaipur. Enquire about pricing and home loan options.",
+  alternates: { canonical: "/" },
+};
+
 export const revalidate = 60; // cached, refreshed within a minute (and instantly after admin changes)
 
 const STEPS = [
   { href: "/size-guide", title: "Know your plot", text: "Turn feet and inches into gaj with the free size guide." },
   { href: "/villas", title: "Pick a design", text: "Elevations, floor plans and room sizes for every villa." },
-  { href: "/how-to-buy", title: "Plan the payment", text: "20% down payment; we arrange the rest as a bank loan." },
+  { href: "/how-to-buy", title: "Plan the payment", text: "20–30% down payment; the remaining 70–80% may be financed through a bank loan." },
   { href: "/contact", title: "Talk to us", text: "Message us on WhatsApp. We call back and explain the project." },
 ];
 
