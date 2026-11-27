@@ -71,6 +71,15 @@ export default async function VillaPage({ params }: Props) {
             <CompassIcon className="h-3.5 w-3.5" /> Vastu friendly, adjusted to your family
           </Link>
 
+          {(villa.actualPrice > 0 || villa.discountedPrice > 0) && (
+            <section className="mt-5 rounded-2xl border border-brass/30 bg-brass-pale/40 p-4" aria-label="Villa price">
+              <p className="text-sm text-muted">Villa price</p>
+              <div className="mt-1 flex flex-wrap items-baseline gap-3">
+                {villa.discountedPrice > 0 && <strong className="text-2xl text-brass">₹{villa.discountedPrice.toLocaleString("en-IN")}</strong>}
+                {villa.actualPrice > 0 && villa.actualPrice > villa.discountedPrice && <span className="text-muted line-through">₹{villa.actualPrice.toLocaleString("en-IN")}</span>}
+              </div>
+            </section>
+          )}
           <dl className="mt-6 grid grid-cols-2 gap-3">
             {facts.sizeText && <Fact label="Plot size" value={facts.sizeText} />}
             {facts.gaj > 0 && <Fact label="Plot area" value={facts.gajText} sub={`${facts.sqftText}, ${facts.sqmText}`} />}
@@ -105,6 +114,15 @@ export default async function VillaPage({ params }: Props) {
           </div>
         </div>
       </div>
+
+      {villa.offers?.length > 0 && (
+        <section className="mt-10 rounded-2xl border border-brass/30 bg-brass-pale/40 p-5" aria-labelledby="offers-heading">
+          <h2 id="offers-heading" className="!text-[1.5rem]">Special offers with this villa</h2>
+          <ul className="mt-3 grid gap-2 sm:grid-cols-2">
+            {villa.offers.map((offer) => <li key={offer} className="flex items-center gap-2"><CheckIcon className="h-4 w-4 text-brass" />{offer}</li>)}
+          </ul>
+        </section>
+      )}
 
       {/* Description, highlights, rooms */}
       <div className="mt-12 grid gap-10 lg:grid-cols-[1.25fr_1fr] lg:gap-12">
