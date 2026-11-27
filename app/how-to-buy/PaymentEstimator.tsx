@@ -11,11 +11,15 @@ export default function PaymentEstimator() {
   const [rate, setRate] = useState(8.5);
   const [years, setYears] = useState(20);
 
-  const down = (price * PAYMENT_PLAN.downPaymentPercent) / 100;
-  const loan = price - down;
+  const downMin = (price * PAYMENT_PLAN.downPaymentMin) / 100;
+  const downMax = (price * PAYMENT_PLAN.downPaymentMax) / 100;
+  const loanMin = (price * PAYMENT_PLAN.loanMin) / 100;
+  const loanMax = (price * PAYMENT_PLAN.loanMax) / 100;
   const r = rate / 100 / 12;
   const n = years * 12;
-  const emi = r > 0 ? (loan * r * Math.pow(1 + r, n)) / (Math.pow(1 + r, n) - 1) : loan / n;
+  const monthlyPayment = (loan: number) => r > 0 ? (loan * r * Math.pow(1 + r, n)) / (Math.pow(1 + r, n) - 1) : loan / n;
+  const emiMin = monthlyPayment(loanMin);
+  const emiMax = monthlyPayment(loanMax);
 
   return (
     <div className="card p-6 text-ink">
@@ -27,9 +31,9 @@ export default function PaymentEstimator() {
         <Field label="Loan period (years)" value={years} onChange={setYears} step={1} min={1} />
       </div>
       <dl className="mt-5 grid gap-3 sm:grid-cols-3">
-        <Out label={`${PAYMENT_PLAN.downPaymentPercent}% down payment`} value={inr(down)} main />
-        <Out label={`${PAYMENT_PLAN.loanPercent}% bank loan`} value={inr(loan)} />
-        <Out label="Indicative monthly EMI" value={inr(emi)} />
+        <Out label={`${PAYMENT_PLAN.downPaymentMin}–${PAYMENT_PLAN.downPaymentMax}% down payment`} value={`${inr(downMin)} – ${inr(downMax)}`} main />
+        <Out label={`${PAYMENT_PLAN.loanMin}–${PAYMENT_PLAN.loanMax}% bank loan`} value={`${inr(loanMin)} – ${inr(loanMax)}`} />
+        <Out label="Indicative monthly EMI range" value={`${inr(emiMin)} – ${inr(emiMax)}`} />
       </dl>
       <p className="mt-3 text-[0.82rem] text-muted">
         The EMI is an estimate for comparison only. {PAYMENT_PLAN.note} Registration charges and stamp duty are extra.
